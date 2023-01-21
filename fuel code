@@ -1,0 +1,31 @@
+const fuelPrices = {};
+
+// Function to fetch fuel prices from API
+async function getFuelPrices() {
+    try {
+        const response = await fetch('https://api.example.com/fuelprices/europe');
+        const data = await response.json();
+        fuelPrices.gasoline = data.gasoline;
+        fuelPrices.diesel = data.diesel;
+        fuelPrices.lpg = data.lpg;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// Function to display fuel prices on the page
+function displayFuelPrices() {
+    const gasolinePrice = document.getElementById('gasoline-price');
+    gasolinePrice.innerHTML = fuelPrices.gasoline + ' €/liter';
+
+    const dieselPrice = document.getElementById('diesel-price');
+    dieselPrice.innerHTML = fuelPrices.diesel + ' €/liter';
+
+    const lpgPrice = document.getElementById('lpg-price');
+    lpgPrice.innerHTML = fuelPrices.lpg + ' €/liter';
+}
+
+// Fetch fuel prices on page load
+getFuelPrices().then(() => {
+    displayFuelPrices();
+});
